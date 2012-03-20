@@ -1,0 +1,57 @@
+Scripting 1 
+Course Timeline
+Goals: 
+1. Begin code for 3D interface
+
+week 4
+Research how to code 3D interface
+Research Papervision3D
+
+
+week 5
+Find flash code in 3D 
+test on iPad
+
+
+week 6
+Develop test using found code
+
+
+week 7
+Develop code for 3D interface
+Add Background images to code
+
+
+week 8
+Develop code for 3D interface
+
+
+week 9
+Develop code for 3D interface
+
+
+week 10
+Develop code for 3D interface
+
+
+week 11
+Develop code for 3D interface
+
+
+week 12
+Develop code for 3D interface
+
+
+week 13
+Begin Code for Home Screen and app intro
+Develop code for 3D interface
+
+
+week 14
+Add designs to Code for Home Screen and app intro
+Develop code for 3D interface
+
+
+week 15
+Finish Code for Home Screen and app intro
+Develop code for 3D interface
