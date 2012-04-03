@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" creationComplete="init()" title="Energy Savings" height="414" currentState="none">
+	<mx:states>
+		<mx:State name="none">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="zero"	 headerText="0%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="one">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid1" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="ten"	 headerText="10%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="two">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid9" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="twenty"	 headerText="20%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="three">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid8" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="thirty"	 headerText="30%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="four">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid4" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="fourty"	 headerText="40%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="five">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid3" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="fifty"	 headerText="50%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="six">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid7" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="sixty"	 headerText="60%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="seven">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid6" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="seventy"	 headerText="70%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="eight">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid2" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="eighty"	 headerText="80%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="nine">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid5" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="ninety"	 headerText="90%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="all">
+			<mx:AddChild position="lastChild">
+				<mx:DataGrid id="myDataGrid0" x="85" y="24" dataProvider="{myFrameInfoLighting}"  width="271" height="342">
+					<mx:columns>
+					<mx:DataGridColumn dataField="lightmonth" headerText="Months"  />
+					<mx:DataGridColumn dataField="onehundred"	 headerText="100%"  />
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	<mx:HTTPService id="getMyFrameDataLighting" url="xmlData/usage_lighting.xml" result="resultHandlerLighting(event)"/>
+	
+	<mx:Script>
+		<![CDATA[
+   import mx.collections.ArrayCollection;
+   
+   import mx.rpc.events.ResultEvent;
+	
+  //Array Collections for FrameInfo
+   [Bindable] private var myFrameInfoLighting:ArrayCollection;
+   
+   
+  private function init():void{
+  
+ getMyFrameDataLighting.send();
+  
+  }	
+
+   //Resulty Handler Frame Data for Lighting
+   private function resultHandlerLighting(event:ResultEvent):void{	
+   		
+   myFrameInfoLighting=event.result.DukeLighting.lighting; 
+
+  
+   
+   }
+
+
+
+
+
+
+
+		]]>
+	</mx:Script>
+	    <mx:Button x="10" y="65" label="10%"   width="57"  click="currentState='one'"  />
+	    <mx:Button x="10" y="35" label="None"  width="57"  click="currentState='none'" />
+	    <mx:Button x="10" y="155" label="40%"  width="57" click="currentState='four'" />
+	    <mx:Button x="10" y="95" label="20%"   width="57" click="currentState='two'" />
+	    <mx:Button x="10" y="125" label="30%"  width="57" click="currentState='three'" />
+	    <mx:Button x="10" y="185" label="50%"  width="57" click="currentState='five'" />
+	    <mx:Button x="10" y="215" label="60%"  width="57" click="currentState='six'" />
+	    <mx:Button x="10" y="245" label="70%"  width="57" click="currentState='seven'" />
+	    <mx:Button x="10" y="275" label="80%"  width="57" click="currentState='eight'" />
+	    <mx:Button x="10" y="305" label="90%"  width="57" click="currentState='nine'" />
+	    <mx:Button x="10" y="335" label="All"  width="57" click="currentState='all'" />
+	    <mx:Label x="10" y="4" text="Bulb Replacement" fontWeight="bold"/>
+	    <mx:Label x="152" y="4" text="Savings" fontWeight="bold"/>
+</mx:Panel>

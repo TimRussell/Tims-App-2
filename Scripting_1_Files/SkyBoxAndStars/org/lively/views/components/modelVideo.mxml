@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  width="410" height="278" removedFromStage="closeMeUp()"  addedToStage="playMyVideo()" horizontalScrollPolicy="off"  verticalScrollPolicy="off" backgroundColor="#B12318" xmlns:myViews="com.universaltrailer.configurator.views.components.*" backgroundAlpha="0.0" color="#FFFFFF" borderColor="#FFFFFF" alpha="1.0">
+	
+	
+	<mx:Script>
+		<![CDATA[
+		
+        //Cairngorm
+		import org.lively.model.ViewModelLocator;
+		private var modelLocator:ViewModelLocator=ViewModelLocator.getInstance();
+			
+			
+		//import statements
+		
+		import mx.managers.PopUpManager;
+		
+		import mx.collections.ArrayCollection;
+		import mx.rpc.events.ResultEvent;
+			
+			
+		/* [Bindable] private var masterVidlist:ArrayCollection; 
+		
+		
+	
+		
+		private function resultHandler(event:ResultEvent):void{
+			
+	    masterVidlist=event.result.MyData.MySet;
+	    
+	    
+	    
+	    } */
+	    
+	    
+	   
+
+	    
+			
+		private function playMyVideo():void{
+			
+			trace("test to see if video play is fired");
+		
+		try {			
+			videoDisplay.source = "assets/video/trish_intro.flv";
+			videoDisplay.play();
+		}catch(error:Error){
+			trace("[getVideo] "+error);
+		}
+
+		
+		}	
+		
+	   private function closeMeUp():void{
+	   	
+	   if(videoDisplay.playing){videoDisplay.stop();}
+	   
+	   
+	   }
+		
+	
+		]]>
+	</mx:Script>
+	
+	
+	  
+		<mx:VideoDisplay x="-13" y="-11" width="436" height="307" id="videoDisplay" autoPlay="true" source="assets/video/trish_intro.flv"  backgroundAlpha="0"   backgroundColor="#FFFFFF" borderColor="#FFFFFF"/>
+		
+	
+	
+</mx:Canvas>

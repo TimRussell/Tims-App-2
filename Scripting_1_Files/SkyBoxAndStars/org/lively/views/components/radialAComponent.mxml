@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="460" height="414"   borderColor="#FEFDFD">
+	<mx:HRule x="35" y="164" width="400" id="hrule0"/>
+	<mx:Label x="27" y="36" text="1. What type of home best describes your primary residence?" fontSize="12" id="label0"/>
+	<mx:HRule x="35" y="253" width="400"/>
+	<mx:RadioButtonGroup id="carryA"  itemClick="radioGroup_itemClick(event);"  />
+	<mx:RadioButton x="61" y="71" label="Detached single family"  groupName="carryA"/>
+	<mx:RadioButton x="61" y="97" label="Duplex / 2 family" groupName="carryA"/>
+	<mx:RadioButton x="61" y="123" label="Townhouse" groupName="carryA"/>
+	<mx:RadioButton x="238" y="71" label="Apartment / Multi – Family / " groupName="carryA"/>
+	<mx:RadioButton x="238" y="97" label="Condominium" groupName="carryA"/>
+	<mx:RadioButton x="238" y="123" label="Manufactured home" groupName="carryA"/>
+	<mx:RadioButtonGroup id="SlantA"  itemClick="radioGroup_itemClickSlant(event);" />
+	<mx:RadioButton x="61" y="219" label="1" groupName="SlantA"/>
+	<mx:RadioButton x="116" y="219" label="2" groupName="SlantA"/>
+	<mx:RadioButton x="170" y="219" label="3" groupName="SlantA"/>
+	<mx:RadioButtonGroup id="BuiltA"  itemClick="radioGroup_itemClickSlant(event);" />
+	<mx:RadioButton x="61" y="294" label="Before 1959" groupName="BuiltA"/>
+	<mx:RadioButton x="179" y="294" label="1960 - 1079" groupName="BuiltA"/>
+	<mx:RadioButton x="297" y="294" label="1980 - 1989" groupName="BuiltA"/>
+	<mx:RadioButton x="61" y="324" label="1990 - 1997" groupName="BuiltA"/>
+	<mx:RadioButton x="179" y="324" label="1998 - 2000" groupName="BuiltA"/>
+	<mx:RadioButton x="297" y="324" label="2001- 2007" groupName="BuiltA"/>
+	<mx:RadioButton x="61" y="355" label="2008" groupName="BuiltA"/>
+	
+	<mx:Script>
+		<![CDATA[
+			//Cairngorm
+			import org.lively.model.ViewModelLocator;
+			private var modelLocator:ViewModelLocator=ViewModelLocator.getInstance();
+							
+			import mx.events.ItemClickEvent;
+
+            private function radioGroup_itemClick(evt:ItemClickEvent):void {
+                var now:String = new Date().toTimeString();
+                //modelLocator.myCarryRadial = evt.label;
+            }
+			 private function radioGroup_itemClickSlant(evt2:ItemClickEvent):void {
+                var now:String = new Date().toTimeString();
+                //modelLocator.mySlantRadial = evt2.label;
+            }
+			
+			
+		]]>
+	</mx:Script>
+	<mx:Label x="11" y="5" text="Example Survey" fontSize="12" color="#B1333C" fontWeight="bold"/>
+	<mx:TextArea x="35" y="172" width="389" fontSize="12" alpha="0.0">
+		<mx:text>2. How many levels does your home have, excluding the basement and unfinished attic?</mx:text>
+	</mx:TextArea>
+	<mx:Label x="35" y="265" text="3. In what year was your home built? " fontSize="12"/>
+	
+	
+	
+	
+	
+</mx:Canvas>

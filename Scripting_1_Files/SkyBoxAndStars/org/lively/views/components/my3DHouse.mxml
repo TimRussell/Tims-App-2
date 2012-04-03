@@ -1,0 +1,1076 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="1000" horizontalScrollPolicy="off" verticalScrollPolicy="off" height="550" creationComplete="silverPlane()">
+	<mx:Script>
+		<![CDATA[
+		
+		
+	import org.papervision3d.events.InteractiveScene3DEvent;
+    import flash.events.*;  	
+
+    //Events
+	import flash.text.TextField;
+	import flash.events.KeyboardEvent;
+    import caurina.transitions.*;
+    import flash.display.*;
+    
+    //Timer Constant
+    import flash.utils.Timer;
+    import flash.events.TimerEvent;
+    import flash.events.*;
+
+	//import main papervision assets
+	import org.papervision3d.cameras.Camera3D;
+	import org.papervision3d.lights.PointLight3D;
+	import org.papervision3d.render.BasicRenderEngine;
+	import org.papervision3d.scenes.Scene3D;
+	import org.papervision3d.view.Viewport3D;
+	import org.papervision3d.events.InteractiveScene3DEvent;
+	
+	//import objects
+	import org.papervision3d.objects.DisplayObject3D;
+	import org.papervision3d.objects.parsers.DAE;
+	
+	//import event listener
+	import org.papervision3d.events.FileLoadEvent;
+	
+	import mx.collections.ArrayCollection;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.events.FaultEvent;
+	import mx.events.EffectEvent;
+	import mx.core.UIComponent;
+	import mx.managers.CursorManager;
+	
+
+import org.papervision3d.events.FileLoadEvent;
+
+import org.papervision3d.materials.BitmapFileMaterial;
+
+import org.papervision3d.events.InteractiveScene3DEvent;
+
+//Be not wise in thine own eyes: fear the LORD, and depart from evil.  It shall be health to thy navel, and marrow to thy bones.
+
+	public var myCountNum=0;
+	private var myTimeIs:Number = 0;
+	
+	public var myDist:Number=100;
+	public var myStartX:Number=-400;
+	public var myStartY:Number=-100;
+	public var myRot:Number=-95;
+	
+	public var myXPos:Number=160;
+	public var myYPos:Number=10;
+	
+	public var myBtnSelected:Boolean=false;
+	
+	//DomStuff
+	//Add Array Collections	
+		   [Bindable] private var mainTable:ArrayCollection;
+           [Bindable] private var closedCapData:ArrayCollection;
+              
+           
+         //Cairngorm
+		import org.lively.model.ViewModelLocator;
+		private var modelLocator:ViewModelLocator=ViewModelLocator.getInstance(); 
+           
+   //Parameters for Keyboard and Cylinders	 
+	 
+	     private var speed:Number = 30; //Forward Back
+	     private var rotspeed:Number = 4; //Rotation
+	     private var highspeed:Number = 30; //Flying
+	     [Bindable]
+	     public var mouseIsDown:Boolean=false;
+	     public var nameofDAE:String;
+	   
+	     private var myIteration:int=0;
+	        
+	     private var params:Array;
+	     private var mySecondIteration:Boolean = false;
+	     
+	     public var houseScale:Number=3.5;
+	     
+	   
+	   
+		   [Bindable] private var myTypeData:String;
+		   [Bindable] private var MyTopicData:String;
+		   [Bindable] private var MyFileNameData:String;
+		   [Bindable] private var myStateData:String;
+		   [Bindable] private var myStartXTime:String;
+		   
+		   
+		   [Bindable] private var MyXHere:String="0";
+		   [Bindable] private var MyYHere:String="0";
+		   [Bindable] private var MyZHere:String="0";
+		   
+    
+	     
+	     
+	     private var delay:uint = 40;
+         
+
+         private var myTimer:Timer = new Timer(delay);
+        
+	       
+	    [Bindable] private var getMyFileNow:String;  
+	                                                            
+		
+		//papervision main assets
+		private var scene:Scene3D;
+		
+		
+		private var viewport:Viewport3D;
+		private var viewport2:Viewport3D;
+		private var viewport3:Viewport3D;
+		private var viewport4:Viewport3D;
+		//private var viewport5:Viewport3D;
+		private var viewport6:Viewport3D;
+		private var viewport7:Viewport3D;
+		private var viewport8:Viewport3D;
+		//private var viewport9:Viewport3D;
+		
+		
+		
+		
+		private var camera:Camera3D;
+		private var renderer:BasicRenderEngine;
+		
+		
+		//other things needed for dae
+		private var DisplayClip01:DisplayObject3D;
+		private var DisplayClip02:DisplayObject3D;
+		private var DisplayClip03:DisplayObject3D;
+		private var DisplayClip04:DisplayObject3D;
+		//private var DisplayClip05:DisplayObject3D;
+		private var DisplayClip06:DisplayObject3D;
+		private var DisplayClip07:DisplayObject3D;
+		private var DisplayClip08:DisplayObject3D;
+		//private var DisplayClip09:DisplayObject3D;
+		
+		public var daeFile:DAE;
+		public var daeFile2:DAE;
+        public var daeFile3:DAE;
+		public var daeFile4:DAE;
+		//public var daeFile5:DAE;
+        public var daeFile6:DAE;
+		public var daeFile7:DAE;
+		public var daeFile8:DAE;
+		//public var daeFile9:DAE;
+		
+        private var bitmapFileMaterial:BitmapFileMaterial;
+
+
+		
+		private function silverPlane():void{
+			
+			myCountNum=0;
+			VisdisABtn();
+			
+		/* bitmapFileMaterial = new BitmapFileMaterial();
+        bitmapFileMaterial.interactive = true;
+        bitmapFileMaterial.doubleSided = true;
+        bitmapFileMaterial.smooth = true;
+        bitmapFileMaterial.tiled = true;
+        bitmapFileMaterial.texture = "assets/DNA.jpg";
+ */
+        
+			
+			/* daeFile9 = new DAE();
+			
+			daeFile9.load("townHouse_unfinished.dae"); */
+			
+	        daeFile8 = new DAE();
+			
+			daeFile8.load("ranch_revamp.dae");
+		   
+		    daeFile7 = new DAE();
+			
+			daeFile7.load("mobileHome.dae");
+		   
+		    daeFile6 = new DAE();
+			
+			daeFile6.load("farmHouse.dae");
+		    
+		  /*   daeFile5 = new DAE();
+			
+			daeFile5.load("duplex_unfinished.dae"); */
+		    
+		    daeFile4 = new DAE();
+			
+			daeFile4.load("colonial.dae");
+		   
+			daeFile3 = new DAE();
+			
+			daeFile3.load("capeCode.dae");
+			
+		    daeFile2 = new DAE();
+			
+			daeFile2.load("biLevel.dae");
+			
+			daeFile = new DAE();
+			
+			daeFile.load("apartmentsGo.dae");
+			
+			//daeFile.material=bitmapFileMaterial;
+			
+			//add loading listeners to your dae
+			daeFile.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+			daeFile2.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+		    daeFile3.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+		    daeFile4.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+		    //daeFile5.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+		    daeFile6.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+		    daeFile7.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+		    daeFile8.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+		
+		
+		}
+		
+		
+	
+		
+		
+		private function ResetMyJect():void{
+		
+		    daeFile = new DAE();
+			
+			
+			daeFile.load(nameofDAE);
+			
+			
+			
+			//add loading listeners to your dae
+			daeFile2.addEventListener(FileLoadEvent.LOAD_COMPLETE, handleLoadComplete);
+			daeFile2.addEventListener(FileLoadEvent.LOAD_ERROR, handleLoadError);
+			daeFile2.addEventListener(FileLoadEvent.LOAD_PROGRESS, handleProgress);
+			daeFile2.addEventListener(FileLoadEvent.SECURITY_LOAD_ERROR, handleSecurity);
+ 			daeFile2.addEventListener(FileLoadEvent.COLLADA_MATERIALS_DONE, handleMaterialsDone);
+		
+	
+		
+		}
+		
+		
+		
+		
+		private function init():void
+		{
+			VisenbABtn();
+			modelLocator.myVideoState="videoHere";
+			
+			
+			//Setup viewport, add to stage
+			viewport = new Viewport3D(968,500,false,false);
+			viewport2 = new Viewport3D(968,500,false,false);
+			viewport3 = new Viewport3D(968,500,false,false);
+			viewport4 = new Viewport3D(968,500,false,false);
+			//viewport5 = new Viewport3D(968,500,false,false);
+			viewport6 = new Viewport3D(968,500,false,false);
+			viewport7 = new Viewport3D(968,500,false,false);
+			viewport8 = new Viewport3D(968,500,false,false);
+			//viewport9 = new Viewport3D(668,100,false,false);
+			
+			/* viewport.interactive=true; 
+            viewport.name = "cubeVP";  
+			viewport.interactiveSceneManager.addEventListener(MouseEvent.MOUSE_OVER,onOver); 
+			viewport.interactiveSceneManager.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS,onClick);  */
+			
+			/* viewport2.interactive=true; 
+			viewport2.buttonMode=true; 
+			viewport2.interactiveSceneManager.addEventListener(MouseEvent.MOUSE_OVER,onOver); 
+			viewport2.interactiveSceneManager.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS,onClick); 
+            */
+			
+			
+		    //Verily I say unto you, Whosoever shall not receive the kingdom of God as a little child shall in no wise enter therein
+			
+			pv3dCanvas.rawChildren.addChild(viewport);
+			
+			pv3dCanvas.rawChildren.addChild(viewport2);
+			
+			pv3dCanvas.rawChildren.addChild(viewport3);
+			
+			pv3dCanvas.rawChildren.addChild(viewport4);
+			
+			//pv3dCanvas.rawChildren.addChild(viewport5);
+			
+			pv3dCanvas.rawChildren.addChild(viewport6);
+			
+			pv3dCanvas.rawChildren.addChild(viewport7);
+			
+			pv3dCanvas.rawChildren.addChild(viewport8);
+			
+			//pv3dCanvas.rawChildren.addChild(viewport9);
+			
+			
+			//Setup renderer
+			renderer = new BasicRenderEngine();
+			
+			//Setup camera
+			camera = new Camera3D();
+			
+			camera.fov=18;
+			//Setup scene
+			scene = new Scene3D();
+			
+									
+			//Setup container, add dae to container, add container to scene.
+			DisplayClip01 = new DisplayObject3D();
+			DisplayClip02 = new DisplayObject3D();
+		    DisplayClip03 = new DisplayObject3D();
+			DisplayClip04 = new DisplayObject3D();
+		    //DisplayClip05 = new DisplayObject3D();
+			DisplayClip06 = new DisplayObject3D();
+		    DisplayClip07 = new DisplayObject3D();
+			DisplayClip08 = new DisplayObject3D();
+		    //DisplayClip09 = new DisplayObject3D();
+		    
+		
+		
+			DisplayClip01.addChild(daeFile);
+				
+			DisplayClip02.addChild(daeFile2);
+			DisplayClip03.addChild(daeFile3);	
+			DisplayClip04.addChild(daeFile4);
+			//DisplayClip05.addChild(daeFile5);	
+			DisplayClip06.addChild(daeFile6);
+			DisplayClip07.addChild(daeFile7);	
+			DisplayClip08.addChild(daeFile8);
+			//DisplayClip09.addChild(daeFile9);
+			
+			
+			scene.addChild(DisplayClip01);
+			scene.addChild(DisplayClip02);
+			scene.addChild(DisplayClip03);
+			scene.addChild(DisplayClip04);
+			//scene.addChild(DisplayClip05);
+			scene.addChild(DisplayClip06);
+			scene.addChild(DisplayClip07);
+			scene.addChild(DisplayClip08);
+			//scene.addChild(DisplayClip09);
+			
+			placePosition();
+			    
+			        
+            startMyTimer();
+  
+			 
+		}
+		
+		
+		private function placePosition():void{
+		
+		DisplayClip01.x=5*myDist+ myStartX; 
+			DisplayClip01.y=myStartY;
+			DisplayClip01.rotationY=myRot;
+		
+			DisplayClip02.x=1*myDist+ myStartX-5; 
+			DisplayClip02.y=myStartY;
+			DisplayClip02.rotationY=myRot;
+			
+			DisplayClip03.x=2*myDist+ myStartX+15;
+			DisplayClip03.y=myStartY;
+			DisplayClip03.rotationY=myRot+180;
+			  
+			DisplayClip04.x=3*myDist+ myStartX+10;
+			DisplayClip04.y=myStartY;
+			DisplayClip04.rotationY=myRot;
+			//DisplayClip05.x=4*myDist+ myStartX;  
+			  
+			DisplayClip06.x=5*myDist+ myStartX-70;
+			DisplayClip06.y=myStartY; 
+			DisplayClip06.rotationY=myRot;  
+			
+			DisplayClip07.x=6*myDist+ myStartX-10;
+			DisplayClip07.y=myStartY;
+			DisplayClip07.rotationY=myRot;  
+			
+			DisplayClip08.x=7*myDist+ myStartX; 
+			DisplayClip08.y=myStartY;
+			DisplayClip08.rotationY=myRot;
+			//DisplayClip09.x=8*myDist+ myStartX;    
+		
+		
+		
+		}
+		
+		
+
+		// onClick 
+		private function onOver(e:InteractiveScene3DEvent):void 
+		{ 
+		    
+		    trace("RollOver:"+e.displayObject3D.name); 
+		}
+		
+		
+		
+		// onClick 
+		private function onClick(e:InteractiveScene3DEvent):void 
+		{ 
+		    
+		    trace("clicked:"+e.displayObject3D.name); 
+		}
+    
+
+		
+		private function startMyTimer():void{
+		
+        myTimer.addEventListener(TimerEvent.TIMER, render);
+        myTimer.start(); 
+		
+		
+		}
+		
+
+	
+		
+		private function onObjectClick(evt:InteractiveScene3DEvent) :void {
+			trace("object  "+evt.displayObject3D);
+		}
+		
+		//Mouse Press
+		
+		        private function mousePressed(event:MouseEvent):void 
+                { 
+                        mouseIsDown = true; 
+                        
+                        trace("Mouse Pressed");
+                     
+                        
+                    trace(mouseX +" x mouse");
+                        
+                } 
+                
+                private function mouseReleased(event:MouseEvent):void 
+                { 
+                        mouseIsDown = false; 
+                } 
+
+		
+		
+//Load Collada		
+
+		private function handleLoadComplete(e:Event):void
+		{
+			trace("IN EVENT LISTENER, LOAD COMPLETE");
+			//messageText.text = "COLLADA LOAD COMPLETE";
+			
+			myCountNum++;
+			
+			if(myCountNum==7){
+			
+			init();
+			
+			}
+			
+			
+			
+		};
+		
+		private function handleLoadError(e:Event):void
+		{
+			//messageText.text = "THERE HAS BEEN A LOADING ERROR";
+		};
+		
+		private function handleProgress(e:Event):void
+		{
+			/* bl = e.target.bytesLoaded;
+			bt = e.target.bytesTotal;
+			per = Math.round(bl/bt*100);
+			messageText.text = "COLLADA "+per+"% LOADED, PLEASE WAIT"; */
+		};
+		
+		private function handleSecurity(e:Event):void
+		{
+			//messageText.text = "THERE HAS BEEN A SECURITY ERROR";
+		};
+		
+		private function handleMaterialsDone(e:Event):void
+		{
+			//messageText.text = "COLLADA MATERIALS LOAD COMPLETE";
+			
+			
+			
+			
+		};
+		
+	
+
+		
+	private function render(e:Event):void
+	{
+			var dayNum:int=modelLocator.myHouseChosen;
+			switch(dayNum)
+    {
+    case 0:
+        DisplayClip01.rotationY=( (mouseX-(myBtn1.width /2) ) * 360 ) / myBtn1.width;
+        break;
+    case 1:
+        DisplayClip02.rotationY=( (mouseX-(myBtn1.width /2) ) * 360 ) / myBtn1.width;
+        break;
+    case 2:
+        DisplayClip03.rotationY=( (mouseX-(myBtn1.width /2) ) * 360 ) / myBtn1.width;
+        break;
+    case 3:
+        DisplayClip04.rotationY=( (mouseX-(myBtn1.width /2) ) * 360 ) / myBtn1.width;
+        break;
+    case 4:
+        DisplayClip06.rotationY=( (mouseX-(myBtn1.width /2) ) * 360 ) / myBtn1.width;
+        break;
+    case 5:
+        DisplayClip07.rotationY=( (mouseX-(myBtn1.width /2) ) * 360 ) / myBtn1.width;
+        break;
+    case 6:
+        DisplayClip08.rotationY=( (mouseX-(myBtn1.width /2) ) * 360 ) / myBtn1.width;
+        break;
+    case 7:
+        
+        break;
+    case 10:
+        trace("this is 10");
+        break;   
+        
+        
+    default:
+        trace("Out of range");
+        break;
+}
+
+			
+
+		 
+	    //DisplayClip01.rotationX=( (mouseY-(stage.stageWidth/2) ) * 360 ) / stage.stageWidth;
+		
+			
+		renderer.renderScene(scene,camera,viewport);
+	
+		renderer.renderScene(scene,camera,viewport2);
+		renderer.renderScene(scene,camera,viewport3);
+		renderer.renderScene(scene,camera,viewport4);
+		//renderer.renderScene(scene,camera,viewport5);
+		
+		renderer.renderScene(scene,camera,viewport6);
+		renderer.renderScene(scene,camera,viewport7);
+		renderer.renderScene(scene,camera,viewport8);
+		//renderer.renderScene(scene,camera,viewport9);
+		
+		
+		
+		}
+		
+
+
+	
+//File Reference	
+ private function resultHandlerPlane(event:ResultEvent):void{
+ 	
+	        mainTable=event.result.MyData.MySet;
+	        
+	        
+	        }	
+	
+private function resultHandlerCapData(event:ResultEvent):void{
+	
+	        closedCapData = event.result.closedcapsystem.caption;
+	        
+	        
+	        
+	        }
+	        
+private function disABtn():void{
+	
+	myBtn1.enabled=false;
+	myBtn2.enabled=false;
+    myBtn3.enabled=false;
+    myBtn4.enabled=false;
+    myBtn5.enabled=false;
+    myBtn6.enabled=false;
+    myBtn7.enabled=false;
+}
+
+private function VisdisABtn():void{
+	
+	myBtn1.y=1422;
+	myBtn2.y=1422;
+    myBtn3.y=1422;
+    myBtn4.y=1422;
+    myBtn5.y=1422;
+    myBtn6.y=1422;
+    myBtn7.y=1422;
+}
+
+private function VisenbABtn():void{
+	
+	myBtn1.y=422;
+	myBtn2.y=422;
+    myBtn3.y=422;
+    myBtn4.y=422;
+    myBtn5.y=422;
+    myBtn6.y=422;
+    myBtn7.y=422;
+	
+	
+
+
+}	        
+	      
+
+
+private function enbABtn():void{
+	
+	myBtn1.enabled=true;
+	myBtn2.enabled=true;
+    myBtn3.enabled=true;
+    myBtn4.enabled=true;
+    myBtn5.enabled=true;
+    myBtn6.enabled=true;
+    myBtn7.enabled=true;
+	
+	
+
+
+}	        
+	        
+	        
+//==================================================CENTERSTAGE===========================
+//==================================================CENTERSTAGE===========================
+
+private function centerOnStage(dayNum:int):void{
+
+modelLocator.myVideoState="noVideo";
+
+modelLocator.myHousePick=true;
+		
+	switch(dayNum)
+    {
+    case 0:
+        
+        break;
+    case 1:
+    
+    if(myBtnSelected==false){
+    	
+       myBtnSelected=true;
+       
+    myBtn1.enabled=true;
+	myBtn2.enabled=false;
+    myBtn3.enabled=false;
+    myBtn4.enabled=false;
+    myBtn5.enabled=false;
+    myBtn6.enabled=false;
+    myBtn7.enabled=false;
+    
+       DisplayClip02.x=myXPos;
+       DisplayClip02.y=myYPos;
+       
+       myBtn1.x=500;
+       myBtn1.y=100;
+       myBtn1.width=550;
+       myBtn1.height=300;
+       
+       DisplayClip02.scaleX=houseScale;
+       DisplayClip02.scaleY=houseScale;
+       DisplayClip02.scaleZ=houseScale;
+       
+       
+    }else{
+       myBtnSelected=false;
+       enbABtn();
+    
+    
+            
+	   placePosition();	
+       
+       myBtn1.x=103;
+       myBtn1.y=422;
+       myBtn1.width=122;
+       myBtn1.height=84;
+       
+       DisplayClip02.scaleX=1;
+       DisplayClip02.scaleY=1;
+       DisplayClip02.scaleZ=1;
+       
+   
+    
+    
+    }
+        break;
+    case 2:
+        if(myBtnSelected==false){
+    	
+        myBtnSelected=true;
+       
+    myBtn1.enabled=false;
+	myBtn2.enabled=true;
+    myBtn3.enabled=false;
+    myBtn4.enabled=false;
+    myBtn5.enabled=false;
+    myBtn6.enabled=false;
+    myBtn7.enabled=false;
+    
+       DisplayClip03.x=myXPos;
+       DisplayClip03.y=myYPos;
+       
+       myBtn2.x=500;
+       myBtn2.y=100;
+       myBtn2.width=550;
+       myBtn2.height=300;
+       
+       
+       
+       
+       DisplayClip03.scaleX=houseScale;
+       DisplayClip03.scaleY=houseScale;
+       DisplayClip03.scaleZ=houseScale;
+       
+       
+    }else{
+       myBtnSelected=false;
+       enbABtn();
+    
+    
+            
+	   placePosition();	
+       
+       myBtn2.x=233;
+       myBtn2.y=422;
+       myBtn2.width=122;
+       myBtn2.height=84;
+       
+       //height="84" width="122" y="422" x="233"
+       
+       
+       DisplayClip03.scaleX=1;
+       DisplayClip03.scaleY=1;
+       DisplayClip03.scaleZ=1;
+       
+   
+    
+    
+    }
+        break;
+    case 3:
+    if(myBtnSelected==false){
+    	
+        myBtnSelected=true;
+       
+    myBtn1.enabled=false;
+	myBtn2.enabled=false;
+    myBtn3.enabled=true;
+    myBtn4.enabled=false;
+    myBtn5.enabled=false;
+    myBtn6.enabled=false;
+    myBtn7.enabled=false;
+    
+       DisplayClip04.x=myXPos;
+       DisplayClip04.y=myYPos-40;
+       
+       myBtn3.x=500;
+       myBtn3.y=100;
+       myBtn3.width=550;
+       myBtn3.height=300;
+       
+
+       DisplayClip04.scaleX=houseScale/1.4;
+       DisplayClip04.scaleY=houseScale/1.4;
+       DisplayClip04.scaleZ=houseScale/1.4;
+       
+       
+    }else{
+       myBtnSelected=false;
+       enbABtn();
+    
+    
+            
+	   placePosition();	
+       
+       myBtn3.x=366;
+       myBtn3.y=422;
+       myBtn3.width=122;
+       myBtn3.height=84;
+       
+       //height="84" width="122" y="422" x="233"
+       
+       
+       DisplayClip04.scaleX=1;
+       DisplayClip04.scaleY=1;
+       DisplayClip04.scaleZ=1;
+       
+   
+    
+    
+    }
+        break;
+    case 4:
+        if(myBtnSelected==false){
+    	
+        myBtnSelected=true;
+       
+    myBtn1.enabled=false;
+	myBtn2.enabled=false;
+    myBtn3.enabled=false;
+    myBtn4.enabled=true;
+    myBtn5.enabled=false;
+    myBtn6.enabled=false;
+    myBtn7.enabled=false;
+    
+       DisplayClip06.x=myXPos;
+       DisplayClip06.y=myYPos;
+       
+       myBtn4.x=500;
+       myBtn4.y=100;
+       myBtn4.width=550;
+       myBtn4.height=300;
+       
+       
+       
+       
+       DisplayClip06.scaleX=houseScale;
+       DisplayClip06.scaleY=houseScale;
+       DisplayClip06.scaleZ=houseScale;
+       
+       
+    }else{
+       myBtnSelected=false;
+       enbABtn();
+    
+    
+            
+	   placePosition();	
+       
+       myBtn4.x=528;
+       myBtn4.y=422;
+       myBtn4.width=122;
+       myBtn4.height=84;
+       
+       //height="84" width="122" y="422" x="233"
+       
+       
+       DisplayClip06.scaleX=1;
+       DisplayClip06.scaleY=1;
+       DisplayClip06.scaleZ=1;
+       
+   
+    
+    
+    }
+        break;
+    case 5:
+        if(myBtnSelected==false){
+    	
+     myBtnSelected=true;
+       
+    myBtn1.enabled=false;
+	myBtn2.enabled=false;
+    myBtn3.enabled=false;
+    myBtn4.enabled=false;
+    myBtn5.enabled=true;
+    myBtn6.enabled=false;
+    myBtn7.enabled=false;
+    
+       DisplayClip01.x=myXPos;
+       DisplayClip01.y=myYPos-40;
+       
+       myBtn5.x=500;
+       myBtn5.y=100;
+       myBtn5.width=550;
+       myBtn5.height=300;
+       
+       
+       
+       
+       DisplayClip01.scaleX=houseScale;
+       DisplayClip01.scaleY=houseScale;
+       DisplayClip01.scaleZ=houseScale;
+       
+       
+    }else{
+       myBtnSelected=false;
+       enbABtn();
+    
+    
+            
+	   placePosition();	
+       
+       myBtn5.x=636;
+       myBtn5.y=422;
+       myBtn5.width=122;
+       myBtn5.height=84;
+       
+       //height="84" width="122" y="422" x="233"
+       
+       
+       DisplayClip01.scaleX=1;
+       DisplayClip01.scaleY=1;
+       DisplayClip01.scaleZ=1;
+       
+   
+    
+    
+    }
+        break;
+    case 6:
+        if(myBtnSelected==false){
+    	
+     myBtnSelected=true;
+       
+    myBtn1.enabled=false;
+	myBtn2.enabled=false;
+    myBtn3.enabled=false;
+    myBtn4.enabled=false;
+    myBtn5.enabled=false;
+    myBtn6.enabled=true;
+    myBtn7.enabled=false;
+    
+       DisplayClip07.x=myXPos;
+       DisplayClip07.y=myYPos;
+       
+       myBtn6.x=400;
+       myBtn6.y=100;
+       myBtn6.width=550;
+       myBtn6.height=300;
+       
+       
+       
+       
+       DisplayClip07.scaleX=houseScale;
+       DisplayClip07.scaleY=houseScale;
+       DisplayClip07.scaleZ=houseScale;
+       
+       
+    }else{
+       myBtnSelected=false;
+       enbABtn();
+    
+    
+            
+	   placePosition();	
+       
+       myBtn6.x=721;
+       myBtn6.y=422;
+       myBtn6.width=122;
+       myBtn6.height=84;
+       
+       //height="84" width="122" y="422" x="233"
+       
+       
+       DisplayClip07.scaleX=1;
+       DisplayClip07.scaleY=1;
+       DisplayClip07.scaleZ=1;
+       
+   
+    
+    
+    }
+        break;
+    case 7:
+                if(myBtnSelected==false){
+    	
+     myBtnSelected=true;
+       
+    myBtn1.enabled=false;
+	myBtn2.enabled=false;
+    myBtn3.enabled=false;
+    myBtn4.enabled=false;
+    myBtn5.enabled=false;
+    myBtn6.enabled=false;
+    myBtn7.enabled=true;
+    
+       DisplayClip08.x=myXPos;
+       DisplayClip08.y=myYPos;
+       
+       myBtn7.x=500;
+       myBtn7.y=100;
+       myBtn7.width=550;
+       myBtn7.height=300;
+       
+       
+       
+       
+       DisplayClip08.scaleX=houseScale;
+       DisplayClip08.scaleY=houseScale;
+       DisplayClip08.scaleZ=houseScale;
+       
+       
+    }else{
+       myBtnSelected=false;
+       enbABtn();
+    
+    
+            
+	   placePosition();	
+       
+       myBtn7.x=851;
+       myBtn7.y=422;
+       myBtn7.width=122;
+       myBtn7.height=84;
+       
+       //height="84" width="122" y="422" x="233"
+       
+       
+       DisplayClip08.scaleX=1;
+       DisplayClip08.scaleY=1;
+       DisplayClip08.scaleZ=1;
+       
+   
+    
+    
+    }
+        break;
+    case 10:
+        trace("this is 10");
+        break;   
+        
+        
+    default:
+        trace("Out of range");
+        break;
+}
+
+
+
+
+}
+
+
+	        
+	        
+//The free gift of God is eternal life in Christ Jesus!	        
+	        
+//And I saw another angel fly in the midst of heaven, having the everlasting gospel to preach unto them that dwell on the earth, and to every nation, and kindred, and tongue, and people,  Saying with a loud voice, Fear God, and give glory to him; for the hour of his judgment is come...
+
+
+private function mouseOver1():void{modelLocator.myHouseChosen=1;}
+private function mouseOut1():void{ DisplayClip02.rotationY=myRot; modelLocator.myHouseChosen=10;}
+private function mouseOver2():void{modelLocator.myHouseChosen=2;}
+private function mouseOut2():void{ DisplayClip03.rotationY=myRot+180; modelLocator.myHouseChosen=10;}
+private function mouseOver3():void{modelLocator.myHouseChosen=3;}
+private function mouseOut3():void{ DisplayClip04.rotationY=myRot; modelLocator.myHouseChosen=10;}
+private function mouseOver4():void{modelLocator.myHouseChosen=4;}
+private function mouseOut4():void{ DisplayClip06.rotationY=myRot; modelLocator.myHouseChosen=10;}
+private function mouseOver5():void{modelLocator.myHouseChosen=0;}
+private function mouseOut5():void{ DisplayClip01.rotationY=myRot; modelLocator.myHouseChosen=10;}
+private function mouseOver6():void{modelLocator.myHouseChosen=5;}
+private function mouseOut6():void{ DisplayClip07.rotationY=myRot; modelLocator.myHouseChosen=10;}
+private function mouseOver7():void{modelLocator.myHouseChosen=6;}
+private function mouseOut7():void{ DisplayClip08.rotationY=myRot; modelLocator.myHouseChosen=10;}
+
+		]]>
+	</mx:Script>
+	
+	<mx:Canvas id="pv3dCanvas" x="57" y="125" width="2" height="2" borderColor="#110101" backgroundColor="#841414" alpha="1.0" backgroundAlpha="0.57"  />  
+	<mx:Button  id="myBtn1" mouseOver="mouseOver1()" mouseOut="mouseOut1()" alpha="0.0" height="84" width="122" x="103" y="422"  click="centerOnStage(1);"  />
+	<mx:Button  id="myBtn2" mouseOver="mouseOver2();" mouseOut="mouseOut2()" alpha="0.0" height="84" width="122" y="422" x="233" click="centerOnStage(2);"  />
+	<mx:Button  id="myBtn3" height="84" width="150"  mouseOver="mouseOver3()" mouseOut="mouseOut3()"  alpha="0.0" x="366" y="422" click="centerOnStage(3);" />
+	<mx:Button  id="myBtn4" height="84" width="100"  mouseOver="mouseOver4()" mouseOut="mouseOut4()"  alpha="0.0" x="528" y="422" click="centerOnStage(4);" />
+	<mx:Button  id="myBtn5" height="84" width="72"   mouseOver="mouseOver5()" mouseOut="mouseOut5()" alpha="0.0" x="636" y="422" click="centerOnStage(5);" />
+	<mx:Button  id="myBtn6" height="84" width="122"  mouseOver="mouseOver6()" mouseOut="mouseOut6()"  alpha="0.0" x="721" y="422" click="centerOnStage(6);"  />
+	<mx:Button  id="myBtn7" height="84" width="122"  mouseOver="mouseOver7()" mouseOut="mouseOut7()"  alpha="0.0" x="851" y="422" click="centerOnStage(7);" />
+		
+		
+		
+		
+
+
+
+
+</mx:Canvas>
